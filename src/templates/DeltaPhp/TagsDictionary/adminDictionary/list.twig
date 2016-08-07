@@ -1,0 +1,59 @@
+{% extends "layoutAdmin.twig" %}
+
+{% block head %}
+    {{ parent() }}
+    {% include "colorbox.twig" %}
+{% endblock head %}
+
+{% block content %}
+    <h1>Словари тегов ({{ countItems }})</h1>
+    <div>
+        <table  class="table">
+            <tr>
+                <th>id</th>
+                <th>title</th>
+                <th>created</th>
+                <th>changed</th>
+                <th>active</th>
+                <th>actions</th>
+            </tr>
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.id|dechex }}</td>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.created|date("d.m.Y") }}</td>
+                    <td>{{ item.changed|date("d.m.Y") }}</td>
+                    <td>{{ item.active }}</td>
+                    <td>
+                        <a href="{{ route_url('tags_list', {'dictionary': item.id|dechex}) }}" class="btn btn-sm btn-success"><span
+                                    class="glyphicon glyphicon-list"></span></a>
+                        <a href="{{ route_url('tags_dictionary_edit', {'id': item.id|dechex}) }}" class="btn btn-sm btn-warning"><span
+                                    class="glyphicon glyphicon-edit"></span></a>
+                        <a href="{{ route_url('tags_dictionary_rm', {'id': item.id|dechex}) }}" class="btn btn-sm btn-danger"><span
+                                    class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </table>
+
+
+        {#paginator#}
+        <div>
+            <ul class="pagination">
+                {% if showFirstPage %}
+                    <li><a href="/admin/tags_dictionary">&laquo;</a></li>
+                {% endif %}
+                {% for page in pages %}
+                    <li class="{% if page.active %}active{% endif %}"><a
+                                href="/admin/tags_dictionary?p={{ page.id }}">{{ page.id }}</a></li>
+                {% endfor %}
+                {% if showLastPage %}
+                    <li><a href="/admin/tags_dictionary?p={{ countPages }}">&raquo;</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <a href="{{ route_url('tags_dictionary_add') }}" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-file"></span>
+        Add New</a>
+{% endblock %}
