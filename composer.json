@@ -1,0 +1,24 @@
+{
+  "name": "deltaphp/tags-dictionary",
+  "description": "Tags Dictionary",
+  "license": "Apache-2.0",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "authors": [
+    {
+      "name": "Vasiliy Shvakin",
+      "email": "zen4dev@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "DeltaPhp\\TagsDictionary\\": "src"
+    }
+  },
+  "require": {
+    "deltaphp/deltacore": "^2.0",
+    "deltaphp/deltautils": "^1.4.4",
+    "deltaphp/uuid": "~1.0",
+    "deltaphp/deltadb": "~1.3",
+  }
+}
