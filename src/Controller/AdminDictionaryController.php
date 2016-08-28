@@ -63,7 +63,7 @@ class AdminDictionaryController extends AbstractController implements AdminContr
         /** @var Dictionary $item */
         $item = $operator->get(Dictionary::class, $id) ?: $operator->create(Dictionary::class);
         if (empty($item)) {
-            throw new \LogicException("item not found");
+            throw new \NotFoundException("item not found");
         }
         $operator->load($item, $requestParams);
         $item->setId($id);

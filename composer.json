@@ -19,6 +19,6 @@
     "deltaphp/deltacore": "^2.0",
     "deltaphp/deltautils": "^1.4.4",
     "deltaphp/uuid": "~1.0",
-    "deltaphp/deltadb": "~1.3"
+    "deltaphp/deltadb": "~1.4"
   }
 }

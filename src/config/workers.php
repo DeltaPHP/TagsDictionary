@@ -30,6 +30,7 @@ return [
             CommandInterface::COMMAND_LOAD => Tag::class,
             CommandInterface::COMMAND_RESERVE => Tag::class,
             CommandInterface::COMMAND_GENERATE_ID => Tag::class,
+            CommandInterface::COMMAND_WORKER_INFO => Tag::class,
         ],
     ],
 
@@ -53,6 +54,7 @@ return [
             CommandInterface::COMMAND_LOAD => Dictionary::class,
             CommandInterface::COMMAND_RESERVE => Dictionary::class,
             CommandInterface::COMMAND_GENERATE_ID => Dictionary::class,
+            CommandInterface::COMMAND_WORKER_INFO => Dictionary::class,
         ],
     ],
 
@@ -75,6 +77,7 @@ return [
             CommandInterface::COMMAND_SAVE => DictionaryTagRelation::class,
             CommandInterface::COMMAND_DELETE => DictionaryTagRelation::class,
             \DeltaPhp\Operator\Command\RelationParamsCommand::COMMAND_RELATION_PARAMS => DictionaryTagRelation::class,
+            CommandInterface::COMMAND_WORKER_INFO => DictionaryTagRelation::class,
         ],
     ],
 

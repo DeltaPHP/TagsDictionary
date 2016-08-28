@@ -19,7 +19,7 @@
             </tr>
             {% for item in items %}
                 <tr>
-                    <td>{{ item.id|dechex }}</td>
+                    <td><a href="{{ route_url('tags_list', {'dictionary': item.id|dechex}) }}" >{{ item.id|dechex }}</a></td>
                     <td>{{ item.title }}</td>
                     <td>{{ item.created|date("d.m.Y") }}</td>
                     <td>{{ item.changed|date("d.m.Y") }}</td>

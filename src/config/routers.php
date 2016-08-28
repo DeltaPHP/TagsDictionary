@@ -41,7 +41,16 @@ return [
             ],
             "action" => ["adminTag", "list"],
         ],
-    "tags_add" => ["/admin/tags/add", ["adminTag", "form"]],
+    "tags_add" =>
+        [
+            "methods" => [\DeltaRouter\Route::METHOD_GET],
+            "patterns" => [
+                "type" => \DeltaRouter\RoutePattern::TYPE_REGEXP,
+                "value" => "^/admin/tags/add/(?P<dictionary>\w+)$",
+            ],
+            "action" => ["adminTag", "form"],
+        ],
+
     "tags_edit" =>
         [
             "methods" => [\DeltaRouter\Route::METHOD_GET],
@@ -50,6 +59,24 @@ return [
                 "value" => "^/admin/tags/edit/(?P<id>\w+)$",
             ],
             "action" => ["adminTag", "form"],
+        ],
+    "tags_add_to_dictionary" =>
+        [
+            "methods" => [\DeltaRouter\Route::METHOD_POST],
+            "patterns" => [
+                "type" => \DeltaRouter\RoutePattern::TYPE_FULL,
+                "value" => "/admin/tags/add-to-dictionary",
+            ],
+            "action" => ["adminTag", "addToDictionary"],
+        ],
+    "tags_rm_from_dictionary" =>
+        [
+            "methods" => [\DeltaRouter\Route::METHOD_POST],
+            "patterns" => [
+                "type" => \DeltaRouter\RoutePattern::TYPE_FULL,
+                "value" => "/admin/tags/remove-from-dictionary",
+            ],
+            "action" => ["adminTag", "rmFromDictionary"],
         ],
     "tags_save" =>
         [

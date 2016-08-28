@@ -6,9 +6,9 @@
 {% endblock head %}
 
 {% block content %}
-    <h1>Теги ({{ countItems }})</h1>
+    <h1>Теги {% if dictionary %} из словаря {{ dictionary.title }}  {% endif %}({{ countItems }}) :</h1>
     <div>
-        <table  class="table">
+        <table class="table">
             <tr>
                 <th>id</th>
                 <th>title</th>
@@ -29,6 +29,13 @@
                                     class="glyphicon glyphicon-edit"></span></a>
                         <a href="{{ route_url('tags_rm', {'id': item.id|dechex}) }}" class="btn btn-sm btn-danger"><span
                                     class="glyphicon glyphicon-remove"></span></a>
+                        {% if dictionary %}
+                            <form class="form-inline" style="display: inline-block;" action="{{ route_url('tags_rm_from_dictionary') }}" method="POST" enctype="multipart/form-data">
+                                <input name="dictionary" type="hidden" value="{{ dictionary.id|dechex }}"/>
+                                <input name="tag" type="hidden" value="{{ item.id|dechex }}"/>
+                                <button type="submit" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-minus"></span></button>
+                            </form>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
@@ -52,6 +59,6 @@
             </ul>
         </div>
     </div>
-    <a href="{{ route_url('tags_add') }}" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-file"></span>
+    <a href="{{ route_url('tags_add', {'dictionary': dictionary.id|dechex}) }}" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-file"></span>
         Add New</a>
 {% endblock %}
