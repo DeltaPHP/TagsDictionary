@@ -71,8 +71,8 @@ class AdminTagController extends AbstractController implements AdminControllerIn
                 new InfoWorkerCommand("table", Dictionary::class)
             );
             $dictWhere = $dictCriteria->createWhereGroup();
-            $dictWhere->createWhere($dictTable, "id", $dictionaryId, "<>");
-            $dictWhere->createWhere($dictTable, "id", "is null", null, Where::REL_OR, Where::TYPE_EXP);
+            $dictWhere->createWhere("id", $dictionaryId, "<>", $dictTable);
+            $dictWhere->createWhere("id", "is null", null, $dictTable, Where::REL_OR, Where::TYPE_EXP);
 
 
             $tags = $operator->find(Tag::class, $dictCriteria);
@@ -114,7 +114,21 @@ class AdminTagController extends AbstractController implements AdminControllerIn
         $item->setId($id);
         $operator->save($item);
 
-        $this->getResponse()->redirect($this->getRouteUrl("tags_list"));
+        //add to dictionary
+        if (!empty($requestParams["dictionary"])) {
+            $dictionary = hexdec($requestParams["dictionary"]);
+
+            $relation = $operator->find(DictionaryTagRelation::class, ["first" => $dictionary, "second" => $item])->firstOrFalse();
+            if (!$relation) {
+                $relation = $operator->create(DictionaryTagRelation::class);
+                /** @var $relation DictionaryTagRelation */
+                $relation->setFirst($dictionary);
+                $relation->setSecond($item);
+                $operator->save($relation);
+            }
+        }
+
+        $this->getResponse()->redirect($this->getRouteUrl("tags_list", isset($dictionary) ? ["dictionary" => dechex($dictionary)] : []));
     }
 
     public function rmAction(array $params = [])

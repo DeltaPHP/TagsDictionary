@@ -5,41 +5,43 @@
 {% endblock head %}
 
 {% block content %}
-    <table class="table">
-        <caption>
-            Доступные тэги
-        </caption>
-        <tr>
-            <th>id</th>
-            <th>title</th>
-            <th>created</th>
-            <th>changed</th>
-            <th>active</th>
-            <th>actions</th>
-        </tr>
-        {% for item in aTags %}
+    {% if dictionary and not aTags.isEmpty %}
+        <table class="table">
+            <caption>
+                Доступные тэги
+            </caption>
             <tr>
-                <td>{{ item.id|dechex }}</td>
-                <td>{{ item.title }}</td>
-                <td>{{ item.created|date("d.m.Y") }}</td>
-                <td>{{ item.changed|date("d.m.Y") }}</td>
-                <td>{{ item.active }}</td>
-                <td>
-                    <form action="{{ route_url('tags_add_to_dictionary') }}" method="POST" enctype="multipart/form-data">
-                        <input name="dictionary" type="hidden" value="{{ dictionary.id|dechex }}"/>
-                        <input name="tag" type="hidden" value="{{ item.id|dechex }}"/>
-                        <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span></button>
-                    </form>
-
-                   {# <a href="{{ route_url('tags_edit', {'id': item.id|dechex}) }}" class="btn btn-sm btn-success"><span
-                                class="glyphicon glyphicon-plus"></span></a>#}
-                  {#  <a href="{{ route_url('tags_rm', {'id': item.id|dechex}) }}" class="btn btn-sm btn-danger"><span
-                                class="glyphicon glyphicon-minus"></span></a>#}
-                </td>
+                <th>id</th>
+                <th>title</th>
+                <th>created</th>
+                <th>changed</th>
+                <th>active</th>
+                <th>actions</th>
             </tr>
-        {% endfor %}
+            {% for item in aTags %}
+                <tr>
+                    <td>{{ item.id|dechex }}</td>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.created|date("d.m.Y") }}</td>
+                    <td>{{ item.changed|date("d.m.Y") }}</td>
+                    <td>{{ item.active }}</td>
+                    <td>
+                        <form action="{{ route_url('tags_add_to_dictionary') }}" method="POST" enctype="multipart/form-data">
+                            <input name="dictionary" type="hidden" value="{{ dictionary.id|dechex }}"/>
+                            <input name="tag" type="hidden" value="{{ item.id|dechex }}"/>
+                            <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span></button>
+                        </form>
 
-    </table>
+                        {# <a href="{{ route_url('tags_edit', {'id': item.id|dechex}) }}" class="btn btn-sm btn-success"><span
+                                     class="glyphicon glyphicon-plus"></span></a>#}
+                        {#  <a href="{{ route_url('tags_rm', {'id': item.id|dechex}) }}" class="btn btn-sm btn-danger"><span
+                                      class="glyphicon glyphicon-minus"></span></a>#}
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    {% endif %}
 
 
 
@@ -48,6 +50,9 @@
         <fieldset>
             {% if (item.id or id) %}
                 <input name="id" type="hidden" value="{{ (item.id ?: id)|dechex }}"/>
+                {% if dictionary %}
+                    <input name="dictionary" type="hidden" value="{{ dictionary.id|dechex }}"/>
+                {% endif %}
             {% endif %}
 
             <!-- Form Name -->

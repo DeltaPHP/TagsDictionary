@@ -8,6 +8,8 @@ use DeltaPhp\TagsDictionary\Entity\Tag;
 use DeltaPhp\TagsDictionary\Entity\Dictionary;
 use \DeltaPhp\TagsDictionary\Entity\DictionaryTagRelation;
 use DeltaPhp\Operator\Command\RelationLoadCommand;
+use DeltaPhp\Operator\Entity\Entity;
+use DeltaPhp\TagsDictionary\Entity\EntityTagRelation;
 
 return [
     "TagEntitiesWorker" => [
@@ -78,6 +80,29 @@ return [
             CommandInterface::COMMAND_DELETE => DictionaryTagRelation::class,
             \DeltaPhp\Operator\Command\RelationParamsCommand::COMMAND_RELATION_PARAMS => DictionaryTagRelation::class,
             CommandInterface::COMMAND_WORKER_INFO => DictionaryTagRelation::class,
+        ],
+    ],
+
+    "EntityTagWorker" => [
+        function (WorkersContainerInterface $s) {
+            $worker = new \DeltaPhp\Operator\Worker\RelationsWorker(Entity::class, Tag::class, EntityTagRelation::class, "entity_tag_relations");
+            $adapter = $s->getOperator()->getDependency("dbAdapter");
+            $worker->setAdapter($adapter);
+            return $worker;
+        },
+        WorkerInterface::PARAM_TABLEID => 102,
+        WorkerInterface::PARAM_ACTIONS_MAP => [
+            RelationLoadCommand::COMMAND_RELATION_LOAD => EntityTagRelation::class,
+            CommandInterface::COMMAND_FIND => EntityTagRelation::class,
+            CommandInterface::COMMAND_LOAD => EntityTagRelation::class,
+            CommandInterface::COMMAND_RESERVE => EntityTagRelation::class,
+            CommandInterface::COMMAND_GENERATE_ID => EntityTagRelation::class,
+            CommandInterface::COMMAND_GET => EntityTagRelation::class,
+            CommandInterface::COMMAND_COUNT => EntityTagRelation::class,
+            CommandInterface::COMMAND_SAVE => EntityTagRelation::class,
+            CommandInterface::COMMAND_DELETE => EntityTagRelation::class,
+            \DeltaPhp\Operator\Command\RelationParamsCommand::COMMAND_RELATION_PARAMS => EntityTagRelation::class,
+            CommandInterface::COMMAND_WORKER_INFO => EntityTagRelation::class,
         ],
     ],
 

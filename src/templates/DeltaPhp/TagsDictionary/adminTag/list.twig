@@ -27,8 +27,10 @@
                     <td>
                         <a href="{{ route_url('tags_edit', {'id': item.id|dechex}) }}" class="btn btn-sm btn-warning"><span
                                     class="glyphicon glyphicon-edit"></span></a>
-                        <a href="{{ route_url('tags_rm', {'id': item.id|dechex}) }}" class="btn btn-sm btn-danger"><span
-                                    class="glyphicon glyphicon-remove"></span></a>
+                        {% if not dictionary %}
+                            <a href="{{ route_url('tags_rm', {'id': item.id|dechex}) }}" class="btn btn-sm btn-danger"><span
+                                        class="glyphicon glyphicon-remove"></span></a>
+                        {% endif %}
                         {% if dictionary %}
                             <form class="form-inline" style="display: inline-block;" action="{{ route_url('tags_rm_from_dictionary') }}" method="POST" enctype="multipart/form-data">
                                 <input name="dictionary" type="hidden" value="{{ dictionary.id|dechex }}"/>

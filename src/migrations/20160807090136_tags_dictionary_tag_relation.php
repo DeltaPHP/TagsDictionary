@@ -17,7 +17,7 @@ CREATE TABLE tag_dictionary_tag_relations
       REFERENCES tags (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
-INHERITS (relations);
+INHERITS (entity_tag_relations);
 SQL;
         $this->execute($sql);
 
